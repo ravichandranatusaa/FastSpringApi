@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @Table(name="COUPON")
 public class Coupon {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	private String code;
 	
 	@OneToOne
@@ -30,10 +30,10 @@ public class Coupon {
 	private float value;
 	private Date expirydate;
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getCode() {

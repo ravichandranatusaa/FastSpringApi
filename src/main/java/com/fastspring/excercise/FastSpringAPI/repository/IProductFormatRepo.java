@@ -1,12 +1,10 @@
 package com.fastspring.excercise.FastSpringAPI.repository;
 
-import java.io.Serializable;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.fastspring.excercise.FastSpringAPI.domain.ProductFormat;
 @Repository
-public interface IProductFormatRepo extends JpaRepository<ProductFormat, Serializable> {
+public interface IProductFormatRepo extends JpaRepository<ProductFormat, Long> {
 
 }

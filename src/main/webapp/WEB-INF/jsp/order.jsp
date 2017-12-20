@@ -21,10 +21,11 @@
   
   
   <% 
-  	com.fastspring.excercise.FastSpringAPI.domain.StoreSession storeSession = (com.fastspring.excercise.FastSpringAPI.domain.StoreSession) request.getAttribute("storesession"); 
- 	if(storeSession!=null) {
+  	com.fastspring.excercise.FastSpringAPI.domain.Orders order = (com.fastspring.excercise.FastSpringAPI.domain.Orders) request.getAttribute("order"); 
+ 	if(order!=null) {
 	%>
-	Store Session Id is : <%=storeSession.getId() %> 
+	Store Session Id is : <%=order.getStoresession().getId() %><br/>
+	Order Id is : <%=order.getId() %><br/>
 	<% 		
 	}
 	%>
@@ -32,12 +33,6 @@
   
 	<div class="container">
 	<br/>
-	<form action="/order" method="POST">
-    	<input type="hidden" name="storesessionid" id="storesessionid" value="<%=storeSession.getId()%>"/>
-          	<input type="submit" class="btn btn-lg btn-success" value="Create Order" role="button"/><br/>
-	</form>
-	
-	
       <footer class="footer">
         <p>© Company 2017</p>
       </footer>

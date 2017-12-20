@@ -13,7 +13,7 @@ public class CouponTypeService {
 	@Autowired
 	ICouponTypeRepo couponTypeRepo;
 	
-	public CouponType getCouponType(int id) {
+	public CouponType getCouponType(Long id) {
 		return couponTypeRepo.getOne(id);
 	}
 	

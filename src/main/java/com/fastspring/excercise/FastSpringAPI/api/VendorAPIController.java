@@ -48,7 +48,7 @@ public class VendorAPIController {
     }
 	
 	@RequestMapping(value = "/coupon", method = RequestMethod.POST, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<Coupon> createCoupon(@RequestParam String code, @RequestParam int discounttypeid, @RequestParam float value, @RequestParam long datemillis) {
+    public ResponseEntity<Coupon> createCoupon(@RequestParam String code, @RequestParam long discounttypeid, @RequestParam float value, @RequestParam long datemillis) {
 		Coupon coupon = new Coupon();
 		coupon.setCode(code);
 		coupon.setExpirydate(new Date(datemillis));
@@ -63,7 +63,7 @@ public class VendorAPIController {
 	
 	
 	@RequestMapping(value = "/coupon/{id}", method = RequestMethod.GET, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<Coupon> getCoupon(@PathVariable int id) {
+    public ResponseEntity<Coupon> getCoupon(@PathVariable long id) {
 		Coupon coupon = couponService.getCoupon(id);
         if (coupon==null) {
             return new ResponseEntity<Coupon>(HttpStatus.NO_CONTENT);
@@ -72,7 +72,7 @@ public class VendorAPIController {
     }
 	
 	@RequestMapping(value = "/coupon/{id}", method = RequestMethod.PUT, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<Coupon> updateCoupon(@PathVariable int id, @RequestParam String code, @RequestParam int discounttypeid, @RequestParam float value, @RequestParam long datemillis) {
+    public ResponseEntity<Coupon> updateCoupon(@PathVariable long id, @RequestParam String code, @RequestParam long discounttypeid, @RequestParam float value, @RequestParam long datemillis) {
 		Coupon coupon = couponService.getCoupon(id);
 		if(coupon!=null) {
 			CouponType coupontype = couponTypeService.getCouponType(discounttypeid);
@@ -92,7 +92,7 @@ public class VendorAPIController {
     }
 	
 	@RequestMapping(value = "/coupon/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<String> deleteCoupon(@PathVariable int id) {
+    public ResponseEntity<String> deleteCoupon(@PathVariable long id) {
 		Coupon coupon = couponService.getCoupon(id);
         if (coupon==null) {
             return new ResponseEntity<String>("Delete Failed",HttpStatus.BAD_REQUEST);
@@ -117,7 +117,7 @@ public class VendorAPIController {
     }
 	
 	@RequestMapping(value = "/product", method = RequestMethod.POST, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<Product> createProduct(@RequestParam String displayname, @RequestParam float unitprice, @RequestParam int defaultqty, @RequestParam String isdefaultqtyedit, @RequestParam String isremovable, @RequestParam int productformatid) {
+    public ResponseEntity<Product> createProduct(@RequestParam String displayname, @RequestParam float unitprice, @RequestParam int defaultqty, @RequestParam String isdefaultqtyedit, @RequestParam String isremovable, @RequestParam long productformatid) {
 		Product product = new Product();
 		product.setDefaultqty(defaultqty);
 		product.setDisplayname(displayname);
@@ -133,7 +133,7 @@ public class VendorAPIController {
 	
 	
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.GET, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<Product> getProduct(@PathVariable int id) {
+    public ResponseEntity<Product> getProduct(@PathVariable long id) {
 		Product product = productService.getProduct(id);
         if (product==null) {
             return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
@@ -142,7 +142,7 @@ public class VendorAPIController {
     }
 	
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.PUT, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestParam String displayname, @RequestParam float unitprice, @RequestParam int defaultqty, @RequestParam String isdefaultqtyedit, @RequestParam String isremovable, @RequestParam int productformatid) {
+    public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestParam String displayname, @RequestParam float unitprice, @RequestParam int defaultqty, @RequestParam String isdefaultqtyedit, @RequestParam String isremovable, @RequestParam long productformatid) {
 		Product product = productService.getProduct(id);
 		if(product!=null) {
 			ProductFormat productformat = productFormatService.getProductFormat(productformatid);
@@ -166,7 +166,7 @@ public class VendorAPIController {
     }
 	
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json", produces="application/json")
-    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable long id) {
 		Product product = productService.getProduct(id);
         if (product==null) {
             return new ResponseEntity<String>("Delete Failed",HttpStatus.BAD_REQUEST);

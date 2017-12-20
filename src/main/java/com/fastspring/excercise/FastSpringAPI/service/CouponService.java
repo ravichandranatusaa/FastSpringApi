@@ -19,7 +19,7 @@ public class CouponService {
 		return couponRepo.findAll();
 	}
 	
-	public Coupon getCoupon(int id) {
+	public Coupon getCoupon(Long id) {
 		return couponRepo.getOne(id);
 	}
 	

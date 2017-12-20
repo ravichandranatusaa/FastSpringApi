@@ -1,0 +1,85 @@
+FastSpring Java Challenge
+
+At FastSpring, we have vendors that have storefronts that list their products,
+bundles, and subscriptions, while also allowing buyers to apply coupons to their
+order. This all takes place in a single page application (SPA) which makes 
+updates via AJAX requests to our backend servers.
+
+We also have a protected API that vendors can use to create products and coupons.
+
+For this challenge, you can have both APIs exist on the same server and ignore
+authentication (obviously a security risk). This challenge allows a vendor to 
+create products and coupons, and a buyer to create a session. All order
+processing is ignored for this challenge.
+
+## Vendor-facing API:
+
+Operations to support:
+ * Create product (see data definitions below)
+ * Create coupon  (see data definitions below)
+
+## Customer-interaction API:
+
+Operations to support:
+ * Initial load of the storefront
+ * Add and remove products from the session
+ * Apply coupon to the order (coupons are applied after all product discounts)
+
+This API should always return the current order session. 
+
+## Data Definitions
+
+Use the following required attributes for each model
+
+Order Session:
+ * List of products and their state
+ * The coupon successfully applied (for simplicity, let's only allow one coupon, 
+   applying another coupon overwrites the previous)
+ * Session information
+
+Product:
+ * ID
+ * Display name
+ * Selected (added to the current session or just available to add)
+ * Quantity (default to 1 if not set)
+ * Default quantity (customer must only be able to add at least this amount)
+ * Quantity editable (is the quantity able to be changed from the default)
+ * Removable (if it can be removed from the session)
+ * Format (digital or physical or mixed)
+ * Unit price 
+ * Discount price (value off unit price)
+ [Below are not required for creating a product]
+ * Quantity discounts (at what quantity what discount is received, either a percent
+    or value. Cumulative with discount price.)
+ * Current price
+ * Current price without discount
+ * Current discount 
+ * Current discount percentage
+ 
+Coupon:
+ * Code value (which the user types in)
+ * Discount type (percent or amount/value off)
+ * Discount value
+ [Below are not required for creating a coupon]
+ * Date range validity
+ 
+
+Suggestions:
+ * Using a database like sqlite makes it is easy to include in your zip file so we
+   already have your database pre-populated.
+ * Otherwise, I would write some code to populate the database.
+ * I suggest creating your data models using an ORM layer like Hibernate.
+  
+You are free to create your API using any framework, but we like to see
+minimal generators used as we have our own custom API framework implemented and 
+understanding the API fundamentals are extremely important. 
+
+Expected deliverables:
+ * Zip file of project code 
+ * Sqlite db file or sqldump, otherwise see next point
+ * Instructions on how to build and use
+ * If you want to write some sort of interface that is great, but definitely 
+   not required
+   
+Feel free to make any assumptions such as default values, but make sure to document.
+

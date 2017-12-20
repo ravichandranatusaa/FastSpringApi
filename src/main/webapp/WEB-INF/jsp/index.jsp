@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0060)https://getbootstrap.com/docs/4.0/examples/narrow-jumbotron/ -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,26 +22,34 @@
 <script src="../js/jquery.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-$().ready(function() {
-    $.ajax({
-        type: "GET",
-        url: "/storeapi/store",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(stores) {
-            $.each(stores, function(index, item) {
-                $("#store").get(0).options[$("#store").get(0).options.length] = new Option(item.displayname, item.id);
-            });
-        },
-        error: function() {
-            alert("Failed to load stores");
-        }
-    });
-});   
+	$().ready(
+			function() {
+				$.ajax({
+					type : "GET",
+					url : "/storeapi/store",
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(stores) {
+						$.each(stores,
+								function(index, item) {
+									$("#store").get(0).options[$("#store").get(
+											0).options.length] = new Option(
+											item.displayname, item.id);
+								});
+					},
+					error : function() {
+						alert("Failed to load stores");
+					}
+				});
+			});
 </script>
 </head>
 
 <body>
+
+	<c:if test="${message} != null">
+		<div class="msg">${message}</div>
+	</c:if>
 
 	<form action="/login" method="post">
 		<div class="container">
@@ -51,16 +60,18 @@ $().ready(function() {
 
 				<div class="form-group">
 					<label for="userid">User Id</label> <input type="text"
-						class="form-control" id="userid" name="userid" placeholder="Enter User ID" />
+						class="form-control" id="userid" name="userid"
+						placeholder="Enter User ID" />
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label> <input type="password"
-						class="form-control" id="password" name="password" placeholder="Password">
+						class="form-control" id="password" name="password"
+						placeholder="Password">
 				</div>
 
 				<div class="form-group">
-					<label for="store">Select Store</label> 
-					<select class="form-control" id="store" name="store">
+					<label for="store">Select Store</label> <select
+						class="form-control" id="store" name="store">
 					</select>
 				</div>
 

@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Table(name="ORDERITEMS")
 public class OrderItems {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	
 	@OneToOne
 	@JoinColumn(name = "orderid")
@@ -52,10 +52,10 @@ public class OrderItems {
 	}
 	
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

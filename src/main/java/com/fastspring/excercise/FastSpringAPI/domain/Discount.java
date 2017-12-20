@@ -12,18 +12,18 @@ import javax.persistence.Table;
 @Table(name="DISCOUNT")
 public class Discount {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	
 	@OneToOne
 	@JoinColumn(name = "discounttypeid")
 	private DiscountType discounttype;
 
 	private int quantity;
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

@@ -1,12 +1,10 @@
 package com.fastspring.excercise.FastSpringAPI.repository;
 
-import java.io.Serializable;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.fastspring.excercise.FastSpringAPI.domain.Discount;
+import com.fastspring.excercise.FastSpringAPI.domain.LoginPerson;
 @Repository
-public interface IDiscount extends JpaRepository<Discount, Serializable> {
+public interface ILoginPersonRepo extends JpaRepository<LoginPerson, Long> {
 
 }

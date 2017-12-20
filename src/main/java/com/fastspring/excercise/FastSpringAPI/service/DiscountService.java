@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fastspring.excercise.FastSpringAPI.domain.Discount;
-import com.fastspring.excercise.FastSpringAPI.repository.IDiscount;
+import com.fastspring.excercise.FastSpringAPI.repository.IDiscountRepo;
 
 @Service
 public class DiscountService {
@@ -18,7 +18,7 @@ public class DiscountService {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private IDiscount discountRepo;
+	private IDiscountRepo discountRepo;
 	
 	public List<Discount> getAllCoupons() {
 		return discountRepo.findAll();

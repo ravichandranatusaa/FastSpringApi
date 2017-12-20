@@ -15,25 +15,30 @@ import javax.persistence.Table;
 @Table(name="ORDERS")
 public class Orders {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	
 	@OneToOne
 	@JoinColumn(name = "storesessionid")
 	private StoreSession storesession;
 	
-	public List<Coupon> getCoupons() {
-		return coupons;
-	}
-	public void setCoupons(List<Coupon> coupons) {
-		this.coupons = coupons;
-	}
-	@OneToMany
+	
+	@OneToOne
 	@JoinColumn(name = "couponid")
-	private List<Coupon> coupons;
+	private Coupon coupons;
 	
 	
+	@OneToMany
+	@JoinColumn(name = "id")
+	private List<OrderItems> orderItems;
 	
+	
+	public List<OrderItems> getOrderItems() {
+		return orderItems;
+	}
+	public void setOrderItems(List<OrderItems> orderItems) {
+		this.orderItems = orderItems;
+	}
 	public StoreSession getStoresession() {
 		return storesession;
 	}
@@ -41,11 +46,17 @@ public class Orders {
 		this.storesession = storesession;
 	}
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+	public Coupon getCoupons() {
+		return coupons;
+	}
+	public void setCoupons(Coupon coupons) {
+		this.coupons = coupons;
 	}
 	
 	

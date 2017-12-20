@@ -10,13 +10,13 @@ import javax.persistence.Table;
 @Table(name="DISCOUNTTYPE")
 public class DiscountType {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	private String typename;
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTypename() {

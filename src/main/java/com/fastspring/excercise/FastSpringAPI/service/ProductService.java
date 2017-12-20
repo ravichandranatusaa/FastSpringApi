@@ -19,7 +19,7 @@ public class ProductService {
 		return productRepo.findAll();
 	}
 	
-	public Product getProduct(int id) {
+	public Product getProduct(Long id) {
 		return productRepo.getOne(id);
 	}
 	

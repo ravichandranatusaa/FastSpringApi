@@ -1,5 +1,6 @@
 package com.fastspring.excercise.FastSpringAPI.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,19 +9,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.domain.Persistable;
+
 @Entity
 @Table(name="STORESESSION")
-public class StoreSession {
+public class StoreSession implements Persistable<Long> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5078072603000690566L;
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "loginpersonid")
 	private LoginPerson loginperson;
 	
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "storeid")
 	private Store store;
 	
@@ -39,10 +48,10 @@ public class StoreSession {
 	}
 	private boolean closesession;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public boolean isClosesession() {
@@ -51,4 +60,12 @@ public class StoreSession {
 	public void setClosesession(boolean closesession) {
 		this.closesession = closesession;
 	}
+	
+	public boolean isNew() {
+		if(id!=null) {
+			return false;
+		}
+		return true;
+	}
+	
 }

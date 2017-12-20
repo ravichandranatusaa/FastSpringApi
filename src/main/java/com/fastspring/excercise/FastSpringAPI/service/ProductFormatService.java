@@ -11,7 +11,7 @@ public class ProductFormatService {
 	@Autowired
 	IProductFormatRepo productFormatRepo;
 
-	public ProductFormat getProductFormat(int id) {
+	public ProductFormat getProductFormat(Long id) {
 		return productFormatRepo.getOne(id);
 	}
 

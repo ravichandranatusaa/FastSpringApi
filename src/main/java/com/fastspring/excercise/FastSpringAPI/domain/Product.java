@@ -13,8 +13,8 @@ import javax.persistence.Table;
 public class Product {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	private String displayname;
 	private float unitprice;
 	private int defaultqty;
@@ -31,10 +31,10 @@ public class Product {
 	public void setProductformat(ProductFormat productformat) {
 		this.productformat = productformat;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getDisplayname() {

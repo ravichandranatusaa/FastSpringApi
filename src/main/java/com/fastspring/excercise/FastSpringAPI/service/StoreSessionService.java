@@ -2,11 +2,13 @@ package com.fastspring.excercise.FastSpringAPI.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fastspring.excercise.FastSpringAPI.domain.StoreSession;
-import com.fastspring.excercise.FastSpringAPI.repository.ILoginPerson;
 import com.fastspring.excercise.FastSpringAPI.repository.IStoreRepo;
 import com.fastspring.excercise.FastSpringAPI.repository.IStoreSessionRepo;
 
@@ -21,22 +23,25 @@ public class StoreSessionService {
 	@Autowired
 	IStoreRepo storeRepo;
 	
+	@PersistenceContext
+	private EntityManager em;
+	
 	public List<StoreSession> getAllStoreSession() {
 		return storeSessionRepo.findAll();
 	}
 	
-	public StoreSession getStoreSession(int id) {
+	public StoreSession getStoreSession(Long id) {
 		return storeSessionRepo.getOne(id);
 	}
 	
 	
-	public StoreSession getStoreSession(String userid, int storeid) {
+	public StoreSession getStoreSession(String userid, Long storeid) {
 		StoreSession retval = new StoreSession();
 		if(userid!=null && storeid>0) {
 			retval.setLoginperson(loginService.getLoginPerson(userid));
 			retval.setStore(storeRepo.findOne(storeid));
 			retval.setClosesession(false);
-			retval = storeSessionRepo.saveAndFlush(retval);
+			retval = storeSessionRepo.save(retval);
 		}
 		return retval;
 	}
