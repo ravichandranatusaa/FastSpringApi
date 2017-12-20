@@ -6,10 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fastspring.excercise.FastSpringAPI.domain.LoginPerson;
 import com.fastspring.excercise.FastSpringAPI.repository.ILoginPerson;
 
+@Service
 public class LoginService {
 	
 	@PersistenceContext
@@ -33,4 +35,22 @@ public class LoginService {
 		
 		return false;
 	}
+	
+	
+	public LoginPerson getLoginPerson(String userid) {
+		
+		if(userid!=null) {
+			List<LoginPerson> persons = userRepo.findAll();
+			if(persons!=null) {
+				for(LoginPerson p:persons) {
+					if(userid.equals(p.getName())) {
+						return p;
+					}
+				}
+			}
+			
+		}
+		return null;
+	}
+	
 }

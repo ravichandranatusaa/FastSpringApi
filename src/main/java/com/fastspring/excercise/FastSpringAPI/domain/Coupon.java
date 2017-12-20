@@ -21,6 +21,12 @@ public class Coupon {
 	@JoinColumn(name = "coupontypeid")
 	private CouponType coupontype;
 	
+	public CouponType getCoupontype() {
+		return coupontype;
+	}
+	public void setCoupontype(CouponType coupontype) {
+		this.coupontype = coupontype;
+	}
 	private float value;
 	private Date expirydate;
 	

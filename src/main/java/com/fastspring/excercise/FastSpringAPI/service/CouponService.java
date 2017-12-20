@@ -19,6 +19,10 @@ public class CouponService {
 		return couponRepo.findAll();
 	}
 	
+	public Coupon getCoupon(int id) {
+		return couponRepo.getOne(id);
+	}
+	
 	public Coupon saveCoupon(Coupon coupon) {
 		if(coupon!=null) {
 			coupon = couponRepo.saveAndFlush(coupon);

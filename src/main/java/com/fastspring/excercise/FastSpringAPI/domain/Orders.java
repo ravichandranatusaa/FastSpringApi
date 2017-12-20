@@ -22,17 +22,18 @@ public class Orders {
 	@JoinColumn(name = "storesessionid")
 	private StoreSession storesession;
 	
-	@OneToMany
-	@JoinColumn(name = "couponid")
-	private List<Coupon> coupons;
-	
-	
 	public List<Coupon> getCoupons() {
 		return coupons;
 	}
 	public void setCoupons(List<Coupon> coupons) {
 		this.coupons = coupons;
 	}
+	@OneToMany
+	@JoinColumn(name = "couponid")
+	private List<Coupon> coupons;
+	
+	
+	
 	public StoreSession getStoresession() {
 		return storesession;
 	}

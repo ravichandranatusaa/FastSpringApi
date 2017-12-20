@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,13 +19,30 @@ public class OrderItems {
 	@JoinColumn(name = "orderid")
 	private Orders order;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "productid")
 	private Product products;
+	
+	
+	private int quantity;
 	
 	private boolean isvoided;
 	private float discountval;
 	private float discountperc;
+	
+	
+	public Product getProducts() {
+		return products;
+	}
+	public void setProducts(Product products) {
+		this.products = products;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	
 	public Orders getOrder() {
 		return order;

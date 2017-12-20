@@ -15,6 +15,7 @@ public class Store {
 	private String storename;
 	private String storeaddr;
 	private String displayname;
+	
 	public int getId() {
 		return id;
 	}

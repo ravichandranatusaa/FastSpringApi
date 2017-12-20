@@ -20,6 +20,17 @@ public class StoreSession {
 	private LoginPerson loginperson;
 	
 	
+	@OneToOne
+	@JoinColumn(name = "storeid")
+	private Store store;
+	
+	
+	public Store getStore() {
+		return store;
+	}
+	public void setStore(Store store) {
+		this.store = store;
+	}
 	public LoginPerson getLoginperson() {
 		return loginperson;
 	}

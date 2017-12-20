@@ -19,7 +19,6 @@ CREATE TABLE discount(id int primary key
 );
 
 ALTER TABLE discount add foreign key (discounttypeid) references discounttype(id);
-ALTER TABLE discount add foreign key (productid) references product(id);
 
 
 create table store(id int primary key, storename varchar(255), storeaddr varchar(2000), displayname varchar(255));
@@ -29,6 +28,10 @@ create table loginperson(id int primary key, name varchar(255), displayname varc
 create table storesession(id int primary key, loginpersonid int, closesession boolean);
 
 ALTER TABLE storesession add foreign key (loginpersonid) references loginperson(id);
+
+ALTER TABLE storesession add column (storeid int);
+
+ALTER TABLE storesession add foreign key (storeid) references store(id);
 
 CREATE TABLE productformat(id int primary key, name varchar(255));
 
@@ -42,6 +45,7 @@ create table product(id int primary key
 ,deletedflag boolean
 );
 
+ALTER TABLE product add foreign key (productformatid) references productformat(id);
 
 create table orders(id int primary key
 ,storesessionid int
@@ -59,8 +63,12 @@ create table orderitems(id int primary key
 ,discountperc decimal(5,2)
 );
 
+ALTER TABLE orderitems add quantity int;
 
 ALTER TABLE orderitems add foreign key (orderid) references orders(id);
 ALTER TABLE orderitems add foreign key (productid) references product(id);
+
+ALTER TABLE discount add foreign key (productid) references product(id);
+
 
 commit;
