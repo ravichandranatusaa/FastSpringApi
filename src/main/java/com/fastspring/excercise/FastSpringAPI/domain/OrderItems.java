@@ -5,9 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="ORDERITEMS")
 public class OrderItems {
@@ -15,7 +19,7 @@ public class OrderItems {
     @GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "orderid")
 	private Orders order;
 	

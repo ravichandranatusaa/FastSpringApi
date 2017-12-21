@@ -9,6 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="COUPON")
 public class Coupon {
@@ -18,13 +24,14 @@ public class Coupon {
 	private String code;
 	
 	@OneToOne
-	@JoinColumn(name = "coupontypeid")
-	private CouponType coupontype;
+	@JoinColumn(name = "discounttypeid")
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	private DiscountType coupontype;
 	
-	public CouponType getCoupontype() {
+	public DiscountType getCoupontype() {
 		return coupontype;
 	}
-	public void setCoupontype(CouponType coupontype) {
+	public void setCoupontype(DiscountType coupontype) {
 		this.coupontype = coupontype;
 	}
 	private float value;

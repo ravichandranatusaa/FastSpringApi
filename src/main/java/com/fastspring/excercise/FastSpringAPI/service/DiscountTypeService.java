@@ -3,18 +3,18 @@ package com.fastspring.excercise.FastSpringAPI.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fastspring.excercise.FastSpringAPI.domain.CouponType;
-import com.fastspring.excercise.FastSpringAPI.repository.ICouponTypeRepo;
+import com.fastspring.excercise.FastSpringAPI.domain.DiscountType;
+import com.fastspring.excercise.FastSpringAPI.repository.IDiscountTypeRepo;
 
 @Service
-public class CouponTypeService {
+public class DiscountTypeService {
 
 	
 	@Autowired
-	ICouponTypeRepo couponTypeRepo;
+	IDiscountTypeRepo discountTypeRepo;
 	
-	public CouponType getCouponType(Long id) {
-		return couponTypeRepo.getOne(id);
+	public DiscountType getDiscountType(Long id) {
+		return discountTypeRepo.getOne(id);
 	}
 	
 }

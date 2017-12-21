@@ -7,5 +7,5 @@ import com.fastspring.excercise.FastSpringAPI.domain.Coupon;
 
 @Repository
 public interface ICouponRepo extends JpaRepository<Coupon, Long> {
-
+	public Coupon findByCode(String code);
 }

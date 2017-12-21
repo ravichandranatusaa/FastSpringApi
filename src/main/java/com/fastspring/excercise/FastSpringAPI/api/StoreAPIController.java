@@ -1,5 +1,6 @@
 package com.fastspring.excercise.FastSpringAPI.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fastspring.excercise.FastSpringAPI.domain.Coupon;
+import com.fastspring.excercise.FastSpringAPI.domain.Discount;
 import com.fastspring.excercise.FastSpringAPI.domain.OrderItems;
 import com.fastspring.excercise.FastSpringAPI.domain.Orders;
 import com.fastspring.excercise.FastSpringAPI.domain.Product;
 import com.fastspring.excercise.FastSpringAPI.domain.Store;
+import com.fastspring.excercise.FastSpringAPI.service.CouponService;
+import com.fastspring.excercise.FastSpringAPI.service.DiscountService;
 import com.fastspring.excercise.FastSpringAPI.service.OrderItemsService;
 import com.fastspring.excercise.FastSpringAPI.service.OrdersService;
 import com.fastspring.excercise.FastSpringAPI.service.ProductService;
@@ -36,42 +42,76 @@ public class StoreAPIController {
 	@Autowired
 	OrderItemsService orderItemsService;
 
-	@RequestMapping(value = "/store", method = RequestMethod.GET)
-	public ResponseEntity<List<Store>> listStores() {
+	@Autowired
+	DiscountService discountService;
+	
+	@Autowired
+	CouponService couponService;
+
+
+	@RequestMapping(value = "/store", method = RequestMethod.GET, headers = "Accept=application/json", produces="application/json")
+	public @ResponseBody List<Store> listStores() {
 		List<Store> stores = storeService.getAllStores();
 		if (stores.isEmpty()) {
-			return new ResponseEntity<List<Store>>(HttpStatus.NO_CONTENT);
+			return new ArrayList<Store>();
 		}
-		return new ResponseEntity<List<Store>>(stores, HttpStatus.OK);
+		return stores;
+	}
+
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/product", method = RequestMethod.GET, headers = "Accept=application/json", produces="application/json")
+	public @ResponseBody List<OrderItems> getProducts(@RequestParam Long orderid) {
+		if(orderid>0) {
+			return ordersService.getOrder(orderid).getOrderItems();
+		}
+		return new ArrayList<OrderItems>();
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.POST, headers = "Accept=application/json", produces="application/json")
-	public ResponseEntity<OrderItems> addProduct(@RequestParam Long orderid, @RequestParam Long productid, @RequestParam float discountval, @RequestParam int quantity) {
+	public @ResponseBody OrderItems addProduct(@RequestParam Long orderid, @RequestParam Long productid, @RequestParam int quantity) {
 
 		OrderItems item = new OrderItems();
 
 		if(orderid>0 && productid>0 && quantity>0) {
 			Product product = productService.getProduct(productid);
+
+			List<Discount> discounts = discountService.getDiscount(product);
+
+			item.setQuantity(quantity);
+
+			/* Start - Logic to Apply Discount */
+			long discountval = 0;
+			int index = 0;
+			for(Discount disc:discounts) {
+				for(int count= quantity; count>0 && index<quantity;count--) {
+					if(disc.getQuantity() == count) {
+						discountval += disc.getValue();
+						quantity = quantity - count; 
+					} 
+					index++;
+				}
+				index=0;
+			}
+			/* End - Logic to Apply Discount */
+			
 			float discountperc = ((product.getUnitprice() - discountval)/product.getUnitprice())*100;
-
 			Orders order = ordersService.getOrder(orderid);
-
 			item.setDiscountperc(discountperc);
 			item.setDiscountval(discountval);
 			item.setIsvoided(false);
 			item.setOrder(order);
 			item.setProducts(product);
-			item.setQuantity(quantity);
-
 			item = orderItemsService.saveOrderItem(item);
-
 		}
-		return new ResponseEntity<OrderItems>(item, HttpStatus.OK);
+		return item;
 	}
 
-
 	@RequestMapping(value = "/product", method = RequestMethod.DELETE, headers = "Accept=application/json", produces="application/json")
-	public ResponseEntity<String> removeProduct(@RequestParam Long orderitemid, @RequestParam Long orderid) {
+	public @ResponseBody boolean removeProduct(@RequestParam Long orderitemid, @RequestParam Long orderid) {
 
 		if(orderitemid>0 && orderid>0) {
 			Orders order = ordersService.getOrder(orderid);
@@ -82,12 +122,26 @@ public class StoreAPIController {
 				order.setOrderItems(items);
 			}
 			ordersService.saveOrder(order);
-			return new ResponseEntity<String>("Success", HttpStatus.OK);
+			return true;
 		} else {
-			return new ResponseEntity<String>("Product Not Found", HttpStatus.BAD_REQUEST);
+			return false;
 		}
 	}
 
 
+	
+	
+	@RequestMapping(value = "/coupon", method = RequestMethod.POST, headers = "Accept=application/json", produces="application/json")
+	public @ResponseBody Orders applyCoupon(@RequestParam Long orderid, @RequestParam String couponcode) {
+		if(orderid>0 && couponcode!=null) {
+			Orders order = ordersService.getOrder(orderid);
+			Coupon coupon = couponService.getCouponByCode(couponcode);
+			
+			order.setCoupons(coupon);
+			ordersService.saveOrder(order);
+			return order;
+		}
+		return new Orders();
+	}
 
 }

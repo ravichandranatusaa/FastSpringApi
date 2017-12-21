@@ -23,6 +23,10 @@ public class CouponService {
 		return couponRepo.getOne(id);
 	}
 	
+	public Coupon getCouponByCode(String code) {
+		return couponRepo.findByCode(code);
+	}
+	
 	public Coupon saveCoupon(Coupon coupon) {
 		if(coupon!=null) {
 			coupon = couponRepo.saveAndFlush(coupon);

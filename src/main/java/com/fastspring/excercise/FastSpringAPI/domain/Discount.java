@@ -20,6 +20,14 @@ public class Discount {
 	private DiscountType discounttype;
 
 	private int quantity;
+	private float value;
+	private int discountorder;
+	
+	@OneToOne
+	@JoinColumn(name = "productid")
+	private Product product;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -32,6 +40,30 @@ public class Discount {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public DiscountType getDiscounttype() {
+		return discounttype;
+	}
+	public void setDiscounttype(DiscountType discounttype) {
+		this.discounttype = discounttype;
+	}
+	public float getValue() {
+		return value;
+	}
+	public void setValue(float value) {
+		this.value = value;
+	}
+	public int getDiscountorder() {
+		return discountorder;
+	}
+	public void setDiscountorder(int discountorder) {
+		this.discountorder = discountorder;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 }

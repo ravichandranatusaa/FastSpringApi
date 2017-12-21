@@ -1,5 +1,6 @@
 package com.fastspring.excercise.FastSpringAPI.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fastspring.excercise.FastSpringAPI.domain.Discount;
+import com.fastspring.excercise.FastSpringAPI.domain.Product;
 import com.fastspring.excercise.FastSpringAPI.repository.IDiscountRepo;
 
 @Service
@@ -20,23 +22,31 @@ public class DiscountService {
 	@Autowired
 	private IDiscountRepo discountRepo;
 	
-	public List<Discount> getAllCoupons() {
+	public List<Discount> getAllDiscount() {
 		return discountRepo.findAll();
 	}
 	
-	public Discount saveCoupon(Discount discount) {
+	public Discount saveDiscount(Discount discount) {
 		if(discount!=null) {
 			discount = discountRepo.saveAndFlush(discount);
 		}
 		return discount;
 	}
 	
-	public boolean deleteCoupon(Discount discount) {
+	public boolean deleteDiscount(Discount discount) {
 		if(discount!=null) {
 			discountRepo.delete(discount);
 			return true;
 		}
 		return false;
+	}
+	
+	public List<Discount> getDiscount(Product product) {
+		List<Discount> retlist = new ArrayList<Discount>();
+		if(product!=null) {
+			retlist = discountRepo.findByProduct(product);
+		}
+		return retlist;
 	}
 	
 }
